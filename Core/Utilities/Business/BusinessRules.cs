@@ -9,7 +9,8 @@ namespace Core.Utilities.Business
 {
     public class BusinessRules
     {
-        public static IResult Run(params IResult[] logics)
+        //BusinnesRules.Run(iş kuralı(),işkuralı_2) şeklinde kullanılacak
+        public static IResult Run(params IResult[] logics)// gönderilen tüm parametreli yani metotları listeye atılıyor
         {
             foreach (var logic in logics)
             {

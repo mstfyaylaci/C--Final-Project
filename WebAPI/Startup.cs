@@ -46,7 +46,14 @@ namespace WebAPI
             //                                                          // sadece 1kez newlenir
             //services.AddSingleton<IProductDal, EfProductDal>();
 
-            
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigins",
+                    builder => builder.WithOrigins("http://localhost:4200")
+                                      .AllowAnyHeader()
+                                      .AllowAnyMethod());
+            });
+
 
             var tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
 
@@ -86,6 +93,10 @@ namespace WebAPI
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebAPI v1"));
             }
+
+            app.ConfigureCustomExceptionMiddleware();
+
+            app.UseCors("AllowSpecificOrigins"); // bu web sayfasý güvenilir
 
             app.UseHttpsRedirection();
 
